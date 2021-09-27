@@ -7,6 +7,7 @@ const Navigation = () => (
     <Nav class="navi" color="white">
         <NavItem>
             <NavList><Link to="/Counter">Counter</Link></NavList> 
+            <NavList><Link to="/Todo">Todo</Link></NavList>
             <NavList><Link to="/Math">Math</Link></NavList>
             <NavList><Link to="/Linearity">Linearity</Link></NavList>
             <NavList><Link to="/Nonlinear">Nonlinear</Link></NavList>
