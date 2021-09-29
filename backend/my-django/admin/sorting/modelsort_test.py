@@ -21,6 +21,11 @@ class TestSort(unittest.TestCase):
         arr = Sorting.quick_sort(arr)
         self.assertEqual(arr, [1, 2, 3, 4, 5, 6, 7, 8, 9])
 
+    def test_Sum(self):
+        arr = [-1, 0, 1, 2, -1, -4]
+        arr = Sorting.Sum(arr)
+        print(arr)
+
 class TestMerge(unittest.TestCase):
 
     def test_merge_prac(self):
@@ -28,6 +33,7 @@ class TestMerge(unittest.TestCase):
         arr= Merge_prac.merge_prac(arr)
         print(arr)
         self.assertEqual(arr, [-1, 0, 3, 4, 5])
+
 
 if __name__ == '__main__':
     unittest.main()

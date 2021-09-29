@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import List
 
 
 class Sorting(object):
@@ -59,4 +60,8 @@ class Sorting(object):
                 arr2.append(value)
         return Sorting.quick_sort(arr1) + Sorting.quick_sort(arr2) + Sorting.quick_sort(arr3)
 
-
+    @staticmethod
+    def Sum (param: []):
+        nums = param
+        nums.sort()
+        return nums
