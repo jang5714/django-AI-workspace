@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { addUserAction } from 'reducers/user.reducer';
+import { userRegister } from 'api';
 
 function Copyright(props) {
   return (
@@ -32,27 +33,32 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function UserJoin() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const dispatch = useDispatch()
+  const [user, setUser] = useState({
+          username: '',
+          name: '',
+          birth: '',
+          address: '',
+          email: '',
+          password: '',
+        })
+  const {username, password, name, email, birth, address} = `user`
+  
   const handleSubmit = e => {
-    e.preventDefault();
-    const user = {
-        email, password
+      e.preventDefault();
+      alert(`가입 회원정보 : ${JSON.stringify(user)}`)
+      userRegister({user}) //DB 저장
+      .then(res => {alert(`회원가입완료: ${res.data.result}`)})
+      .catch(err => {alert(`회원가입 실패 : ${err}`)})
     }
-    addUser(user)
-    setEmail('')
-    setPassword('')
-  };
-  const addUser = user => dispatch(addUserAction(user))
-  const emailhandleChange = e => {
+  
+  const handleChange = e => {
       e.preventDefault()
-      setEmail(e.target.value)
-  }
-
-  const pwhandleChange = e => {
-      e.preventDefault()
-      setPassword(e.target.value)
+      const {name, value} = e.target
+      // alert(`name: ${name}, value: ${value}`)
+      setUser({
+        ...user,
+        [name]: value
+      })
   }
 
   return (
@@ -74,28 +80,75 @@ export default function UserJoin() {
             Sign Up
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField onChange = {emailhandleChange}
+          <TextField onChange = {handleChange}
+              margin="normal"
+              required
+              fullWidth
+              name="username"
+              label="username"
+              type="text"
+              id="username"
+              value = {username}
+              autoComplete="current-username"
+            />
+            <TextField onChange = {handleChange}
               margin="normal"
               required
               fullWidth
               id="email"
               label="Email Address"
-              name="signup"
+              name="email"
+              type="email"
               value = {email}
               autoComplete="email"
               autoFocus
             />
-            <TextField onChange = {pwhandleChange}
+            <TextField onChange = {handleChange}
               margin="normal"
               required
               fullWidth
-              name="signup"
+              id="name"
+              label="name"
+              name="name"
+              type="text"
+              value = {name}
+              autoComplete="name"
+              autoFocus
+            />
+            <TextField onChange = {handleChange}
+              margin="normal"
+              required
+              fullWidth
+              name="Password"
               label="Password"
               type="password"
               id="password"
               value = {password}
               autoComplete="current-password"
+            />            
+            <TextField onChange = {handleChange}
+              margin="normal"
+              required
+              fullWidth
+              name="address"
+              label="address"
+              type="text"
+              id="address"
+              value = {address}
+              autoComplete="current-address"
             />
+            <TextField onChange = {handleChange}
+              margin="normal"
+              required
+              fullWidth
+              name="birth"
+              label="birth"
+              type="text"
+              id="birth"
+              value = {birth}
+              autoComplete="current-birth"
+            />
+
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -108,18 +161,14 @@ export default function UserJoin() {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Cancel
+            </Button>
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />

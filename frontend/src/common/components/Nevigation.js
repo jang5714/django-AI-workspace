@@ -12,11 +12,11 @@ const Navigation = () => (
             <NavList><Link to="/Math">Math</Link></NavList>
             <NavList><Link to="/Linearity">Linearity</Link></NavList>
             <NavList><Link to="/Nonlinear">Nonlinear</Link></NavList>
-            <NavList><Link to="/BruteForce">BruteForce</Link></NavList>
-            <NavList><Link to="/DivideConquer">DivideConquer</Link></NavList>
+            <NavList><Link to="/Brute-force">BruteForce</Link></NavList>
+            <NavList><Link to="/Divide-conquer">DivideConquer</Link></NavList>
             <NavList><Link to="/Greedy">Greedy</Link></NavList>
-            <NavList><Link to="/DynamicProgramming">DynamicProgramming</Link></NavList>
-            <NavList><Link to="/BackTracking">BackTracking</Link></NavList>
+            <NavList><Link to="/Dynamic-programming">DynamicProgramming</Link></NavList>
+            <NavList><Link to="/Back-tracking">BackTracking</Link></NavList>
         </NavItem>
     </Nav>
     </>

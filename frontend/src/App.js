@@ -19,10 +19,10 @@ const App = () =>(
         <Route exact path='/Counter' component={Counter}/>
         <Route exact path='/Todo' component={Todo}/>
         <Route exact path='/SignUp' component={SignUp}/>
-        <Route exact path='/BackTracking' component={BackTracking}/>
-        <Route exact path='/BruteForce' component={BruteForce}/>
-        <Route exact path='/DivideConquer' component={DivideConquer}/>
-        <Route exact path='/DynamicProgramming' component={DynamicProgramming}/>
+        <Route exact path='/Back-tracking' component={BackTracking}/>
+        <Route exact path='/Brute-force' component={BruteForce}/>
+        <Route exact path='/Divide-conquer' component={DivideConquer}/>
+        <Route exact path='/Dynamic-programming' component={DynamicProgramming}/>
         <Route exact path='/Greedy' component={Greedy}/>
         <Route exact path='/Linearity' component={Linearity}/>
         <Route exact path='/Math' component={Math}/>

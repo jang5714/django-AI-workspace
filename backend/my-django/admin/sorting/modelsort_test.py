@@ -1,7 +1,11 @@
 import unittest
+import sys
 
-from modelssort import Sorting
-from merge_practis import Merge_prac
+from admin.sorting.merge_practis import Merge_prac
+from admin.sorting.modelssort import Sorting
+
+sys.path.append('/admin/sorting')
+
 
 class TestSort(unittest.TestCase):
 
@@ -23,7 +27,7 @@ class TestSort(unittest.TestCase):
 
     def test_Sum(self):
         arr = [-1, 0, 1, 2, -1, -4]
-        arr = Sorting.Sum(arr)
+        arr = Sorting.threeSum(arr)
         print(arr)
 
 class TestMerge(unittest.TestCase):
