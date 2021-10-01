@@ -1,19 +1,21 @@
 from rest_framework import serializers
-from .models import UserVo as user
+from .models import User as user
 
 class UserSerializer(serializers.Serializer):
+
     username = serializers.CharField()
     password = serializers.CharField()
     name = serializers.CharField()
     email = serializers.CharField()
     birth = serializers.CharField()
     address = serializers.CharField()
+
     class Meta:
         model = user
-        fileds = '__all__'
+        fields = '__all__'
 
-    def create(self, valided_data):
-        return user.objects.create(**valided_data)
+    def create(self, validated_data):
+        return user.objects.create(**validated_data)
 
-    def update(self, instence, valided_data):
-        user.objects.filter(pk=instence.username).update(**valided_data)
+    def update(self, instance, validated_data):
+        user.objects.filter(pk=instance.username).update(**validated_data)

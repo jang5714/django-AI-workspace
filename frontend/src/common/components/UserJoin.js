@@ -45,8 +45,8 @@ export default function UserJoin() {
   
   const handleSubmit = e => {
       e.preventDefault();
-      alert(`가입 회원정보 : ${JSON.stringify(user)}`)
-      userRegister({user}) //DB 저장
+      alert(`가입 회원정보 : ${JSON.stringify(user)}`)// 스트링으로 변화게 하다 안하면 인간이 못알아 보게 된다.
+      userRegister({user}) //DB 저장 
       .then(res => {alert(`회원가입완료: ${res.data.result}`)})
       .catch(err => {alert(`회원가입 실패 : ${err}`)})
     }
@@ -119,8 +119,8 @@ export default function UserJoin() {
               margin="normal"
               required
               fullWidth
-              name="Password"
-              label="Password"
+              name="password"
+              label="password"
               type="password"
               id="password"
               value = {password}

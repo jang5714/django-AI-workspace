@@ -14,7 +14,7 @@ export default function TodoInput(){
             name: todo,
             complete: false
         }
-        addTodo(newTodo)
+        addTodo(newTodo) //Redux에 저장
         setTodo('')
     }
     const addTodo = todo => dispatch(addTodoAction(todo))
