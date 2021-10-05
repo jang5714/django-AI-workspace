@@ -1,6 +1,6 @@
 import React from 'react';
-import { SignIn } from "common";
-import { connect } from 'api';
+import { SignIn } from 'features/user';
+import { connect } from 'common/modules/commonAPI';
 
 export default function Home(){
     const handleClick = e => {
