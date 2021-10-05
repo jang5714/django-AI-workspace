@@ -52,7 +52,7 @@ export default function UserJoin() {
     }
   
   const handleChange = e => {
-      e.preventDefault()
+      e.preventDefault() // 바로 이벤트가 즉시 실행되지 못하게 하기 위해 작성 필수
       const {name, value} = e.target
       // alert(`name: ${name}, value: ${value}`)
       setUser({
