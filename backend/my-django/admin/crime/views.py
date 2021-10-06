@@ -10,3 +10,7 @@ from admin.crime.models import CrimeCctvModel
 def create_crime_model(request):
     CrimeCctvModel().create_crime_model()
     return JsonResponse({'crime':'create model Success'})
+
+def create_police_position(request):
+    CrimeCctvModel().create_police_position()
+    return JsonResponse({'crime':'create model Success'})
