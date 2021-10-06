@@ -3,5 +3,5 @@ from admin.common import views
 
 
 urlpatterns = {
-    url(r'',views.connection)
+    url(r'',views.connection),
 }
