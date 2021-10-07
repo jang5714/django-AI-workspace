@@ -10,7 +10,7 @@ import json
 import googlemaps
 
 @dataclass
-class DFrameGenerator(object):
+class ValueObject(object):
 
     train: object
     test: object
@@ -64,6 +64,11 @@ class DFrameGenerator(object):
     def create_model(self):
         return pd.read_csv(self.fname)
 
+    def model_info(self, model):
+        ic(model.head(3))
+        ic(model.tail(3))
+        ic(model.info())
+        ic(model.describe())
 
 
 
@@ -91,17 +96,17 @@ class Reader(ReaderBase):
     def new_file(self, file) -> str:
        return file.context + file.fname
 
-    def csv(self, file) -> object:
-        return pd.read_csv(f'{file}.csv', encoding='CP949', thousands=',')
+    def csv(self, file, header, usecols) -> object:
+        return pd.read_csv(f'{file}.csv', encoding='UTF-8', thousands=',', header=header, usecols=usecols)
 
     def csv_header(self, file, header) -> object:
-        return pd.read_csv(f'{file}.csv', encoding='CP949', thousands=',', header=header)
+        return pd.read_csv(f'{file}.csv', encoding='UTF-8', thousands=',', header=header)
 
     def xls(self,file, header, usecols):
-        return pd.read_excel(f'{file}.xls', header=header, usecols=usecols)
+        return pd.read_excel(f'{file}.xls', header=header, usecols=usecols, encoding='cp949')
 
     def json(self, file):
-        return json.load(open(f'{file}.json', encoding='CP949'))
+        return json.load(open(f'{file}.json', encoding='UTF-8'))
 
     def gmaps(self):
         return googlemaps.Client(key='')
@@ -117,7 +122,7 @@ class Printer(PrinterBase):
     def dframe(self, this):
         ic(this.head(3))
         ic(this.tail(3))
-        ic(this.info())
-        ic(this.isnull().sum())
+        print(this.info())
+        print(this.isnull().sum())
 
 

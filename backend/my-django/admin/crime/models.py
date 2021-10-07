@@ -1,11 +1,11 @@
 import pandas as pd
 from django.db import models
 
-from admin.common.models import DFrameGenerator, Reader, Printer
+from admin.common.models import ValueObject, Reader, Printer
 
 
 class CrimeCctvModel(object):
-    generator = DFrameGenerator()
+    vo = ValueObject()
     reader = Reader()
     printer = Printer()
 
@@ -19,12 +19,12 @@ class CrimeCctvModel(object):
         self.arrest_rate_columns = ['살인검거율', '강도검거율', '강간검거율', '절도검거율', '폭력검거율'] # Ratio
 
     def create_crime_model(self):
-        generator = self.generator
+        vo = self.vo
         reader = self.reader
         printer = self.printer
-        generator.context = 'admin/crime/data/'
-        generator.fname = 'crime_in_Seoul'
-        crime_file_name = reader.new_file(generator)
+        vo.context = 'admin/crime/data/'
+        vo.fname = 'crime_in_Seoul'
+        crime_file_name = reader.new_file(vo)
         print(f'파일명: {crime_file_name}')
         crime_model = reader.csv(crime_file_name)
         printer.dframe(crime_model)
@@ -34,8 +34,9 @@ class CrimeCctvModel(object):
         crime = self.create_crime_model()
         reader = self.reader
         station_names = []
-        for name in crime['관서명']:
-            station_names.append('서울'+str(name[:-1]+ '경찰서'))
+        # for name in crime['관서명']:
+        #     station_names.append('서울'+str(name[:-1]+ '경찰서'))
+        [station_names.append('서울' + str(name[:-1] + '경찰서')) for name in crime['관서명']]
         station_addrs = []
         station_late = []
         station_lngs =[]
@@ -54,13 +55,41 @@ class CrimeCctvModel(object):
             gu_names.append(gu_name)
         crime['구별'] = gu_names
         # 구와 경찰서의 위치가 다른 경우 수작업
-        crime.loc[crime['관서명'] == '혜화서', ['구별']] == '종로구'
-        crime.loc[crime['관서명'] == '서부서', ['구별']] == '은평구'
-        crime.loc[crime['관서명'] == '강서서', ['구별']] == '양천구'
-        crime.loc[crime['관서명'] == '종암서', ['구별']] == '성북구'
-        crime.loc[crime['관서명'] == '방배서', ['구별']] == '서초구'
-        crime.loc[crime['관서명'] == '수서서', ['구별']] == '강남구'
-        crime.to_csv(self.generator.context+'new_data/police_positions.csv')
+        crime.loc[crime['관서명'] == '혜화서', ['구별']] = '종로구'
+        crime.loc[crime['관서명'] == '서부서', ['구별']] = '은평구'
+        crime.loc[crime['관서명'] == '강서서', ['구별']] = '양천구'
+        crime.loc[crime['관서명'] == '종암서', ['구별']] = '성북구'
+        crime.loc[crime['관서명'] == '방배서', ['구별']] = '서초구'
+        crime.loc[crime['관서명'] == '수서서', ['구별']] = '강남구'
+        # crime.to_csv(self.vo.context+'new_data/police_positions.csv')
 
+    def create_cctv_model(self):
+        vo = self.vo
+        reader = self.reader
+        printer = self.printer
+        vo.context = 'admin/crime/data/'
+        vo.fname = 'CCTV_in_Seoul'
+        cctv_file_name = reader.new_file(vo)
+        print(f'파일명: {cctv_file_name}')
+        cctv_model = reader.csv(cctv_file_name)
+        cctv_model.rename(columns={'기관명':'구별'}, inplace=True)
+        printer.dframe(cctv_model)
+        cctv_model.to_csv(self.vo.context + 'new_data/CCTV_positions.csv')
+        return cctv_model
+
+
+    def create_population_mode(self):
+        vo = self.vo
+        reader = self.reader
+        printer = self.printer
+        vo.context = 'admin/crime/data/'
+        vo.fname = '01. population_in_Seoul'
+        population_file_name = reader.new_file(vo)
+        print(f'파일명: {population_file_name}')
+        population_model = reader.xls(population_file_name, 2, 'B,D,G,J,N')
+        population_model.rename(columns={'합계': '구별'}, inplace=True)
+        printer.dframe(population_model)
+        population_model.to_csv(self.vo.context + 'new_data/population_positions1.csv')
+        return population_model
 
 

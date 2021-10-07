@@ -13,4 +13,12 @@ def create_crime_model(request):
 
 def create_police_position(request):
     CrimeCctvModel().create_police_position()
-    return JsonResponse({'crime':'create model Success'})
+    return JsonResponse({'crime':'create Police Success'})
+
+def create_cctv_model(request):
+    CrimeCctvModel().create_cctv_model()
+    return JsonResponse({'crime':'create cctv Success'})
+
+def create_population_mode(request):
+    CrimeCctvModel().create_population_mode()
+    return JsonResponse({'crime':'create population Success'})
