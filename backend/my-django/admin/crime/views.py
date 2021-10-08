@@ -19,6 +19,14 @@ def create_cctv_model(request):
     CrimeCctvModel().create_cctv_model()
     return JsonResponse({'crime':'create cctv Success'})
 
-def create_population_mode(request):
-    CrimeCctvModel().create_population_mode()
+def create_population_model(request):
+    CrimeCctvModel().create_population_model()
     return JsonResponse({'crime':'create population Success'})
+
+def merge_cctv_pop(request):
+    CrimeCctvModel().merge_cctv_pop()
+    return JsonResponse({'crime':'merge Success'})
+
+def sum_crime(request):
+    CrimeCctvModel().sum_crime()
+    return JsonResponse({'crime':'sum Success'})
