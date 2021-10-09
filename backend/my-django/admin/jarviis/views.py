@@ -17,3 +17,4 @@ def create_jarviis_model(request):
 def create_message_model(request):
     Jarviis().create_message_model()
     return JsonResponse({'result': 'jarviis message SUCCESS'})
+
