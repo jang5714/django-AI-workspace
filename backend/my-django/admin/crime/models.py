@@ -16,8 +16,8 @@ class CrimeCctvModel(object):
         살인 발생,살인 검거,강도 발생,강도 검거,강간 발생,강간 검거,절도 발생,절도 검거,폭력 발생,폭력 검거
         '''
         self.vo.context = 'admin/crime/data/'
-        self.crime_columns = ['살인발생', '강도발생', '강간발생', '절도발생', '폭력발생'] # Nominal
-        self.arrest_columns = ['살인검거', '강도검거', '강간검거', '절도검거', '폭력검거'] # Nominal
+        self.crime_columns = ['살인 발생', '강도 발생', '강간 발생', '절도 발생', '폭력 발생'] # Nominal
+        self.arrest_columns = ['살인 검거', '강도 검거', '강간 검거', '절도 검거', '폭력 검거'] # Nominal
         self.arrest_rate_columns = ['살인검거율', '강도검거율', '강간검거율', '절도검거율', '폭력검거율'] # Ratio
 
     def create_crime_model(self):
@@ -103,7 +103,6 @@ class CrimeCctvModel(object):
         r이 +0.3과 +0.7 사이이면, 뚜렷한 양적 선형관계,
         r이 +0.7과 +1.0 사이이면, 강한 양적 선형관계
         '''
-
         ic(cctv_pop_model.corr())
         '''
                              소계    2013년도 이전   2014년  2015년    2016년     인구수    한국인     외국인      고령자
@@ -112,29 +111,22 @@ class CrimeCctvModel(object):
            2014년          0.450062   0.121888  1.000000  0.312842  0.415387  0.027040  0.025005  0.027325  0.010233
            2015년          0.624402   0.257748  0.312842  1.000000  0.513767  0.368912  0.363796  0.013301  0.372789
            2016년          0.593398   0.355482  0.415387  0.513767  1.000000  0.144959  0.145966 -0.042688  0.065784
-           인구수          [0.306342]   0.168177  0.027040  0.368912  0.144959  1.000000  0.998061 -0.153371  0.932667
-           한국인          [0.304287]   0.163142  0.025005  0.363796  0.145966  0.998061  1.000000 -0.214576  0.931636
-           외국인          [-0.023786]  0.048973  0.027325  0.013301 -0.042688 -0.153371 -0.214576  1.000000 -0.155381
-           고령자          [0.255196]   0.105379  0.010233  0.372789  0.065784  0.932667  0.931636 -0.155381  1.000000
+           인구수          [0.306342]  0.168177  0.027040  0.368912  0.144959  1.000000  0.998061 -0.153371  0.932667
+           한국인          [0.304287]  0.163142  0.025005  0.363796  0.145966  0.998061  1.000000 -0.214576  0.931636
+           외국인          [-0.023786] 0.048973  0.027325  0.013301 -0.042688 -0.153371 -0.214576  1.000000 -0.155381
+           고령자          [0.255196]  0.105379  0.010233  0.372789  0.065784  0.932667  0.931636 -0.155381  1.000000
 
+
+        범죄률을 낮추고 검거율을 높인다.
         '''
         self.printer.dframe(cctv_pop_model)
         # cctv_pop_model.to_csv(self.vo.context + 'new_data/new_cctv_pop.csv')
 
     def sum_crime(self):
-
-        vo = self.vo
-        vo.context = 'admin/crime/data/new_data/'
-        reader = self.reader
-        vo.fname = 'police_positions'
-        cctv_file_name = reader.new_file(vo)
-        print(f'파일명: {cctv_file_name}')
-        crime = reader.csv(cctv_file_name)
-        crime['범죄 발생'] = crime.loc['살인 발생', '강도 발생', '강간 발생', '절도 발생', '폭력 발생'].sum(axis=1)
-        # crime['범죄 검거'] = crime.loc[:, [3, 6, 8, 10, 12]].sum(axis=1)
-        # crime_final = crime.drop([crime.columns[0]],axis=1)
-        # crime.drop(crime.columns[2], crime.columns[11])
-
-        # crime['범죄 검거'] = crime.loc[:'살인 검거', '강도 검거', '강간 검거', '절도 검거', '폭력 검거'].sum()
-        # self.printer.dframe(crime)
-        crime.to_csv('admin/crime/data/' + 'new_data/new_crime01.csv')
+        crime = pd.read_csv(self.vo.context + 'new_data/police_positions.csv')
+        crime['발생'] = crime.loc[:, self.crime_columns].sum(axis=1)
+        crime['검거'] = crime.loc[:, self.arrest_columns].sum(axis=1)
+        grouped = crime.groupby('구별')
+        crime_filter = grouped['발생', '검거'].sum()
+        self.printer.dframe(crime_filter)
+        crime_filter.to_csv(self.vo.context + 'new_data/new_crime_arrest.csv')
