@@ -2,12 +2,13 @@ from abc import ABCMeta, abstractmethod
 
 import pandas as pd
 from django.db import models
-
+# -*- coding: utf-8 -*-
 from dataclasses import dataclass
 from icecream import ic
 import pandas as pd
 import json
 import googlemaps
+from pandas.testing import assert_index_equal
 
 @dataclass
 class ValueObject(object):
@@ -71,7 +72,7 @@ class ValueObject(object):
         ic(model.describe())
 
 
-
+# -*- coding: utf-8 -*-
 class ReaderBase(metaclass=ABCMeta):
 # 추상 클래스는 메서드의 목록만 가지고 있고 상속받는 클래스에서 메서드 구현을 강제하기 dnl해
 
@@ -90,14 +91,14 @@ class ReaderBase(metaclass=ABCMeta):
     @abstractmethod
     def json(self):
         pass
-
+# -*- coding: utf-8 -*-
 class Reader(ReaderBase):
 
     def new_file(self, file) -> str:
        return file.context + file.fname
 
     def csv(self, file) -> object:
-        return pd.read_csv(f'{file}.csv', encoding='UTF-8', thousands=',')
+        return pd.read_csv(f'{file}.csv', thousands=',')
 
     def csv_header(self, file, header) -> object:
         return pd.read_csv(f'{file}.csv', encoding='UTF-8', thousands=',', header=header)

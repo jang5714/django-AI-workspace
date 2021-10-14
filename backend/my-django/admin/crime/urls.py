@@ -8,6 +8,7 @@ urlpatterns = {
     url(r'create-cctv',views.create_cctv_model),
     url(r'create-population',views.create_population_model),
     url(r'create-merge',views.merge_cctv_pop),
-    url(r'sum-succes',views.sum_crime)
+    url(r'sum-succes',views.sum_crime),
+    url(r'process',views.process)
 
 }
