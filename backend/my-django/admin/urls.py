@@ -22,4 +22,5 @@ urlpatterns = {
     path('api/users/', include('admin.user.urls')),
     path('api/crime/', include('admin.crime.urls')),
     path('api/jarviis/', include('admin.jarviis.urls')),
+    path('api/crawling/', include('admin.crawling.urls')),
 }

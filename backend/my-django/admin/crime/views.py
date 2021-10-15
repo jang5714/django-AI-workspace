@@ -34,3 +34,8 @@ def sum_crime(request):
 def process(request):
     Crime().process()
     return JsonResponse({'crime':'process'})
+
+
+def crime_police(request):
+    Crime().crime_police()
+    return JsonResponse({'crime':'crime_police'})

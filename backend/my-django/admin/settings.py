@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'admin.jarviis',
+    'admin.crawling',
     'admin.crime',
     'admin.user',
     'admin.common',
