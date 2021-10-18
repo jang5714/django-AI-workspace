@@ -8,6 +8,6 @@ def time_format():
 
 
 ic('=====================================')
-ic('====== Django REST Framework ========')
+ic(f'====== Django REST Framework {datetime.now()}========')
 ic('=====================================')
 ic(time_format())
