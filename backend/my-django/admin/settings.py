@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'admin.calculator',
+    'admin.tensor',
     'admin.jarviis',
     'admin.crawling',
     'admin.crime',
