@@ -11,3 +11,15 @@ import matplotlib.pyplot as plt
 def base(request):
     Iris().base()
     return JsonResponse({'Iris Base': 'Success'})
+
+@api_view(['GET'])
+@parser_classes([JSONParser])
+def advanced(request):
+    Iris().advanced()
+    return JsonResponse({'Iris advanced': 'Success'})
+
+@api_view(['GET'])
+@parser_classes([JSONParser])
+def iris_by_tf(request):
+    Iris().iris_by_tf()
+    return JsonResponse({'Iris by_tf': 'Success'})

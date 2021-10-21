@@ -91,6 +91,8 @@ class ReaderBase(metaclass=ABCMeta):
     @abstractmethod
     def json(self):
         pass
+
+
 # -*- coding: utf-8 -*-
 class Reader(ReaderBase):
 
