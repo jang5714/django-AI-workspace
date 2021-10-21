@@ -24,4 +24,5 @@ urlpatterns = {
     path('api/jarviis/', include('admin.jarviis.urls')),
     path('api/crawling/', include('admin.crawling.urls')),
     path('api/tensor/', include('admin.tensor.urls')),
+    path('api/iris/', include('admin.iris.urls')),
 }
