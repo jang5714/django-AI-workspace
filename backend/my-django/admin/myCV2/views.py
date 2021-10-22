@@ -23,3 +23,16 @@ def girl(request):
 def face_detect(request):
     MyCV2().face_detect()
     return JsonResponse({'face_detect': 'Success'})
+
+@api_view(['GET'])
+@parser_classes([JSONParser])
+def cat_mosaic(request):
+    MyCV2().cat_mosaic()
+    return JsonResponse({'cat_mosaic': 'Success'})
+
+@api_view(['GET'])
+@parser_classes([JSONParser])
+def face_mosaic(request):
+    MyCV2().face_mosaic()
+    return JsonResponse({'face_mosaic': 'Success'})
+
