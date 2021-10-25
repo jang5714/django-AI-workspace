@@ -11,3 +11,9 @@ import matplotlib.pyplot as plt
 def ram_price(request):
     MyRNN().ram_price()
     return JsonResponse({'ram_price': 'Success'})
+
+@api_view(['GET'])
+@parser_classes([JSONParser])
+def kia_predict(request):
+    MyRNN().kia_predict()
+    return JsonResponse({'kia_predict': 'Success'})
