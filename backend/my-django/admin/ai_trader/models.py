@@ -12,7 +12,7 @@ class AITrader(object):
     def __init__(self, state_size, action_space=3, model_name='AITrader'):
         self.state_size = state_size
         self.action_space = action_space
-        self.memory = deque(maxlen=2000)
+        self.memory = deque(maxlen=2000) #큐(queue) 선입선출 방식으로 작동한다. 양방향 큐는 데크(deque)
         self.inventory = []
         self.model_name = model_name
         self.gamma = 0.95
@@ -52,7 +52,7 @@ class AITrader(object):
                 reward = reward + self.gamma * np.amax(model.predict(next_state)[0])
             target = model.predict(state)
             target[0][action] = reward
-            model.fit(state, target, epochs=1, verbose=0)
+            model.fit(state, target, epochs=1, verbose=0) #verbose는 학습이 실해되는  모습을 볼것인가
         if self.epsilon > self.epsilon_final:
             self.epsilon *= self.epsilon_decay
 

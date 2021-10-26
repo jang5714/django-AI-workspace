@@ -1,5 +1,4 @@
 from collections import defaultdict
-
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
@@ -10,11 +9,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import csv
 
-
 from admin.common.models import ValueObject
-
-
-
 
 class NaverMoive(object):
     def __init__(self):
@@ -29,20 +24,18 @@ class NaverMoive(object):
         all_divs = soup.find_all('div', attrs={'class', 'tit3'})
         products = [[div.a.string for div in all_divs]]
         with open(f'{ctx}naver_movie_dataset.csv', 'w', encoding='UTF-8', newline='') as f:
-                wr = csv.writer(f, delimiter= ',')
+                wr = csv.writer(f, delimiter=',')
                 wr.writerow(products)
         driver.close()
-
-
 
     def naver_process(self):
         # self.web_scraping()
         ctx = self.vo.context
-        corpus = pd.read_table(f'{ctx}naver_movie_dataset.csv', sep=',', encoding='UTF-8')
+        corpus = pd.read_table(f'{ctx}review_train.csv', sep=',', encoding='UTF-8')
         train_X = np.array(corpus)
         # 카테고리 0 (긍정) 1 (부정)
         n_class0 = len([1 for _, point in train_X if point > 3.5])
-        n_class1 = len([train_X]) -n_class0
+        n_class1 = len([train_X]) - n_class0
         counts = defaultdict(lambda : [0,0]) #dictionary 를 만드는 팩토리 메소드
         for doc, point in train_X:
             if self.isNumber(doc) is False:
@@ -50,8 +43,7 @@ class NaverMoive(object):
                 for word in words:
                     counts[word][0 if point > 3.5 else 1] += 1
         word_counts = counts
-        word_probs = None
-        print(f'word_counts ::: {word_counts}')
+        # print(f'word_counts ::: {word_counts}')
 
 
     def isNumber(self, doc):
@@ -60,7 +52,6 @@ class NaverMoive(object):
             return True
         except ValueError:
             return False
-
 
     def count_words(self, train_X):
         pass
