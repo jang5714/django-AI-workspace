@@ -8,8 +8,8 @@ from time import sleep
 from bs4 import BeautifulSoup
 import pandas as pd
 import csv
-
 from admin.common.models import ValueObject
+
 
 class NaverMoive(object):
     def __init__(self):
@@ -44,6 +44,9 @@ class NaverMoive(object):
                     counts[word][0 if point > 3.5 else 1] += 1
         word_counts = counts
         # print(f'word_counts ::: {word_counts}')
+
+        # () for i, j in []:
+        #     pass
 
 
     def isNumber(self, doc):
