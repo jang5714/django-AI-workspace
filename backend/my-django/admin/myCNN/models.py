@@ -141,6 +141,7 @@ class Cifor10Classification(object):
         y_pred = tf.nn.softmax(logits)
         return y_pred, logits
 
+
 class CatDogClassification(object):
     def __init__(self):
         self.vo = ValueObject()
