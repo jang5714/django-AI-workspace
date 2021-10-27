@@ -1,34 +1,27 @@
-import react from 'react'
+import React from 'react';
+import logo from './logo.svg';
+import { Counter } from './features/counter/Counter';
+import './App.css';
 import { Route, Redirect, Switch } from 'react-router';
-import { Navigation, Home } from 'common';
-import { BackTracking, BruteForce, DivideConquer, DynamicProgramming, Greedy } from 'features/algorithm'
-import { Linearity, Nonlinear, Math } from 'features/datastructure';
-import { SignUp } from 'features/user'
-import { CounterOld } from 'features/counterOld'
-import { Todo } from 'features/todos'
-import { createStore, combineReducers } from 'redux'
-import { Provider } from 'react-redux' //데이터 베이스와 연결해주는 역할(ex: MyBatis)
-import { store } from 'app/store'
+import {Home, Navigation }from 'features/common';
+import {UserAdd, UserDetail, UserList, UserLogin, UserModify, UserRemove} from 'features/users'
 
-const App = () =>(
-    <Provider store={store}>
+const App= () => {
+  return (
+    <div className="App">
       <Navigation/>
       <Switch>
         <Route exact path='/' component= {Home}/>
-        <Redirect from='/Home' to ={'/'}/>
-        <Route exact path='/CounterOld' component={CounterOld}/>
-        <Route exact path='/Todo' component={Todo}/>
-        <Route exact path='/SignUp' component={SignUp}/>
-        <Route exact path='/Back-tracking' component={BackTracking}/>
-        <Route exact path='/Brute-force' component={BruteForce}/>
-        <Route exact path='/Divide-conquer' component={DivideConquer}/>
-        <Route exact path='/Dynamic-programming' component={DynamicProgramming}/>
-        <Route exact path='/Greedy' component={Greedy}/>
-        <Route exact path='/Greedy' component={Math}/>
-        <Route exact path='/Linearity' component={Linearity}/>
-        <Route exact path='/Nonlinear' component={Nonlinear}/>
+        <Redirect from='/home' to ={'/'}/>
+        <Route exact path='/users/add' component={UserAdd}/>
+        <Route exact path='/users/detail' component={UserDetail}/>
+        <Route exact path='/users/list' component={UserList}/>
+        <Route exact path='/users/login' component={UserLogin}/>
+        <Route exact path='/users/modify' component={UserModify}/>
+        <Route exact path='/users/remove' component={UserRemove}/>
       </Switch>
-    </Provider>
-)
+    </div>
+  );
+}
 
 export default App;
