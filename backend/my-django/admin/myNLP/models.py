@@ -73,6 +73,24 @@ class NaverMovie(object):
         print(f'결과 :::: {result}')
         print('#'*100)
 
+    def review_scraping(self):
+        ctx = self.vo.context
+        driver = webdriver.Chrome(f'{ctx}chromedriver')
+        driver.get('https://movie.naver.com/movie/point/af/list.naver?&page=1')
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+        all_divs = soup.find_all('td', attrs={'class', 'title'})
+        reviews = [str(td.br.next_element.string) for td in all_divs]
+        for i, j in enumerate(reviews):
+            reviews[i] = j.replace('\n', '')
+            reviews[i] = reviews[i].replace('\t', '')
+        ratings = [td.em.string for td in all_divs]
+        result = {ratings[i]: reviews[i] for i in range(len(reviews))}
+        with open(f'{ctx}naver_movie_review_dataset.csv', 'w', encoding='UTF-8', newline='') as f:
+            wr = csv.writer(f, delimiter=',')
+            wr.writerow(result.keys())
+            wr.writerow(result.values())
+        driver.close()
+
     def load_corpus(self):
         corpus = pd.read_table(f'{self.vo.context}review_train.csv', sep=',', encoding='UTF-8')
         corpus = np.array(corpus)
