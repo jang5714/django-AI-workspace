@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'admin.myNLP',
     'admin.ai_trader',
-    'admin.rnn',
+    'admin.myRNN',
     'admin.myCV2',
     'admin.iris',
     'admin.tensor',
