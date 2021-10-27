@@ -10,8 +10,50 @@ from bs4 import BeautifulSoup
 import csv
 from admin.common.models import ValueObject
 import pandas as pd
+# !pip install tensorflow-gpu==2.0.0-rc1
+import tensorflow as tf
+import numpy as np
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score
 
 
+class GPUkoreanClassification(object):
+    def __init__(self):
+        pass
+
+    def classifiy(self):
+        ko_str = '이것은 한국어 문장입니다.'
+        ja_str = 'これは日本語の文章です。'
+        en_str = 'This is English Sentences.'
+        x_train = [self.count_codePoint(ko_str),
+                   self.count_codePoint(ja_str),
+                   self.count_codePoint(en_str)]
+        y_train = ['ko', 'ja', 'en']
+        clf = GaussianNB()
+        clf.fit(x_train, y_train)
+        ko_test_str = '안녕하세요'
+        ja_test_str = 'こんにちは'
+        en_test_str = 'Hello'
+        x_test = [self.count_codePoint(en_test_str),
+                  self.count_codePoint(ja_test_str),
+                  self.count_codePoint(ko_test_str)]
+        y_test = ['en', 'ja', 'ko']
+        y_pred = clf.predict(x_test)
+        print(y_pred)
+        print('정답률 : ', accuracy_score(y_test, y_pred))
+
+    def count_codePoint(str):
+        counter = np.zeros(65535)  # Unicode 코드 포인트 저장 배열
+        for i in range(len(str)):
+            code_point = ord(str[i])
+            if code_point > 65535:
+                continue
+            counter[code_point] += 1
+
+        counter = counter / len(str)
+        return counter
+
+# 감성 분석
 class NaverMovie(object):
 
     def __init__(self):
