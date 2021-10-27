@@ -17,6 +17,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
 from tensorflow.keras.utils import to_categorical
 
+
 class HomonymClassification(object):
     def __init__(self):
         pass
@@ -79,6 +80,7 @@ class GPUkoreanClassification(object):
 
         counter = counter / len(str)
         return counter
+
 
 # 감성 분석
 class NaverMovie(object):
