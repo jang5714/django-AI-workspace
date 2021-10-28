@@ -63,6 +63,7 @@ CHAPTER_ID = "autoencoders"
 IMAGES_PATH = os.path.join(PROJECT_ROOT_DIR, "images", CHAPTER_ID)
 os.makedirs(IMAGES_PATH, exist_ok=True)
 
+
 class AutoencodersGans(object):
     def __init__(self):
         self.vo = ValueObject()
@@ -142,7 +143,7 @@ class GenerateFashion(object):
     def rounded_accuracy(self, y_true, y_pred): # 135번 라인에 직접 입력함
         return keras.metrics.binary_accuracy(tf.round(y_true), tf.round(y_pred))
 
-    def show_reconstructions(self, model, images=X_valid, n_images=5):
+    def show_reconstructions(self, model, images=0, n_images=5):
         reconstructions = model.predict(images[:n_images])
         fig = plt.figure(figsize=(n_images * 1.5, 3))
         for image_index in range(n_images):

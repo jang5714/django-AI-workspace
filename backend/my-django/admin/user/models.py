@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class User(models.Model):
     use_in_migrations = True
     username = models.CharField(primary_key=True, max_length=10)

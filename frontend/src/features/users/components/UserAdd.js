@@ -1,84 +1,183 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-// import { useSelector, useDispatch } from 'react-redux';
-// import {
-//   decrement,
-//   increment,
-//   incrementByAmount,
-//   incrementAsync,
-//   incrementIfOdd,
-//   selectCount,
-// } from './counterSlice';
+import { useHistory } from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+
+function Copyright(props) {
+    return (
+      <Typography variant="body2" color="text.secondary" align="center" {...props}>
+        {'Copyright © '}
+        <Link color="inherit" href="https://material-ui.com/">
+          Your Website
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+    );
+  }
+  const server = 'http://127.0.0.1:8000/api/'
+  const header = {'Content-Type':'application/json'} //Restfull 데이터에 대한 설정 값
+  const theme = createTheme();
+
+export const userRegister = body => axios.post(`${server}users`,{header, body})
 
 export default function UserAdd() {
     const history = useHistory()
-    const SERVER = 'http://localhost:8080'
-    const [join, setJoin] = useState({
-        username: '', password: '', email: '', name: '', regDate : new Date().toLocaleDateString()
-    })
-    const {username, password, email, name} = join
-
-    const handleChange = e => {
-        const{value, name} = e.target
-        setJoin({
-            ...join,
-            [name] :  value
-        })
-    }
-    const userJoin = joinRequest => 
-                axios.post(`${SERVER}/users`, JSON.stringify(joinRequest),{headers})
-    const headers = {
-        'Content-Type' : 'application/json',
-        'Authorization' : 'JWT fefege..'
-      }
+    const [user, setUser] = useState({
+              username: '',
+              name: '',
+              birth: '',
+              address: '',
+              email: '',
+              password: '',
+            })
+    const {username, password, name, email, birth, address} = `user`
     const handleSubmit = e => {
-        e.preventDefault()
-        const joinRequest = {...join}
-        alert(`회원가입 정보 : ${JSON.stringify(joinRequest)}`)
-        userJoin(joinRequest)
-        .then(res =>{
-            alert('회원가입 성공')
+          e.preventDefault();
+          alert(`가입 회원정보 : ${JSON.stringify(user)}`)// 스트링으로 변화게 하다 안하면 인간이 못알아 보게 된다.
+          userRegister({user}) //DB 저장 
+          .then(
+            res => {alert(`회원가입완료: ${res.data.result}`)},
             history.push('/users/login')
-        })
-        .catch(err=> {
-            alert(`회원가입 실패 : ${err}`)
-        })
-    }
+            )
+          .catch(err => {alert(`회원가입 실패 : ${err}`)})
+        }
+      
+    const handleChange = e => {
+          e.preventDefault() // 바로 이벤트가 즉시 실행되지 못하게 하기 위해 작성 필수
+          const {name, value} = e.target
+          // alert(`name: ${name}, value: ${value}`)
+          setUser({
+            ...user,
+            [name]: value
+          })
+      }
 
     return (
-        <div>
-        <h1>회원 가입을 환영합니다</h1>
-        <form onSubmit={handleSubmit} method='POST'>
-            <ul>
-                <li>
-                    <label>
-                        아이디: <input type="text" id="username" name="username" value={username} onChange={handleChange}
-                        size="10" minlength="4" maxlength="15"/>
-                    </label>
-                    <small> 4~15자리 이내의 영문의 숫자</small>
-                </li>
-                <li>
-                    <label>
-                        이메일: <input type="email" id="email" name="email" value={email} onChange={handleChange}/>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        비밀번호: <input type="password" id="password" name="password" value={password} onChange={handleChange}/>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        이름: <input type="text" id="name" name="name" value={name} onChange={handleChange}/>
-                    </label>
-                </li>
-                <li>
-                    <input type="submit" value="회원가입"/>
-                </li>
-            </ul>
-        </form>
-        </div>
+        <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs" method="POST">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign Up
+            </Typography>
+            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <TextField onChange = {handleChange}
+                margin="normal"
+                required
+                fullWidth
+                name="username"
+                label="username"
+                type="text"
+                id="username"
+                value = {username}
+                autoComplete="current-username"
+              />
+              <TextField onChange = {handleChange}
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                type="email"
+                value = {email}
+                autoComplete="email"
+                autoFocus
+              />
+              <TextField onChange = {handleChange}
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="name"
+                name="name"
+                type="text"
+                value = {name}
+                autoComplete="name"
+                autoFocus
+              />
+              <TextField onChange = {handleChange}
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="password"
+                type="password"
+                id="password"
+                value = {password}
+                autoComplete="current-password"
+              />
+              <TextField onChange = {handleChange}
+              margin="normal"
+              required
+              fullWidth
+              name="address"
+              label="address"
+              type="text"
+              id="address"
+              value = {address}
+              autoComplete="current-address"
+            />
+            <TextField onChange = {handleChange}
+              margin="normal"
+              required
+              fullWidth
+              name="birth"
+              label="birth"
+              type="text"
+              id="birth"
+              value = {birth}
+              autoComplete="current-birth"
+            />
+         
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign In
+              </Button>
+              <Button
+                type="button"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Cancel
+              </Button>
+            </Box>
+          </Box>
+          <Copyright sx={{ mt: 8, mb: 4 }} />
+        </Container>
+      </ThemeProvider>
     );
 }
