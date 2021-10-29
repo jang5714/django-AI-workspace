@@ -11,7 +11,7 @@ export default function UserLogin() {
     const {value, name} = e.target
     setLogin({
       ...login,
-      [name] : value
+      [name]:value
     })
   }
   const headers = {
@@ -23,6 +23,7 @@ export default function UserLogin() {
       document.getElementById(i).value = ''
     }
   }
+  
   const handleClick = e => {
     e.preventDefault()
     e.stopPropagation()

@@ -4,17 +4,21 @@ import axios from 'axios';
 
 
 export default function UserDetail() {
-    const SERVER = 'http://localhost:8080'
+    const SERVER = 'http://localhost:8000/api'
     const history = useHistory()
     const [detail, setDetail] = useState({
-        userId:'', username:'', password:'', email:'', name:'', regDate: new Date().toLocaleDateString()
+        username:'', name:'', birth:'', address:'', email:'', password:''
     })
-
+    const headers = {
+        'Content-Type' : 'application/json',
+        'Authorization': 'JWT fefege..'
+      }
     const fetchOne = () => {
         const sessionUser = JSON.parse(localStorage.getItem('sessionUser'))
-        alert('사용자 아이디: ' +sessionUser.userId)
-        axios.get(`${SERVER}/users/${sessionUser.userId}`)
+        alert('사용자 아이디: ' +sessionUser.username)
+        axios.post(`${SERVER}/users/detail` , JSON.stringify(sessionUser),{headers}) 
         .then(res => {
+            alert(`회원 정보 조회 성공 : ${res.data}`)
             setDetail(res.data)
         })
         .catch(err => {
@@ -38,7 +42,7 @@ export default function UserDetail() {
         <ul>
             <li>
                 <label>
-                    <span>아이디: {detail.userId}</span>
+                    <span>아이디: {detail.username}</span>
                 </label>
             </li>
             <li>

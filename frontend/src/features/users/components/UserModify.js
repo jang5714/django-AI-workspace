@@ -4,17 +4,17 @@ import { useHistory  } from 'react-router-dom';
 
 export default function UserModify() {
     const history = useHistory()
-    const SERVER = 'http://localhost:8080'
+    const SERVER = 'http://localhost:8000/api'
     const sessionUser = JSON.parse(localStorage.getItem('sessionUser')); 
     const [modify, setModify] = useState({
-        userId: sessionUser.userId,
+        birth: sessionUser.birth,
         username:sessionUser.username, 
         password:sessionUser.password, 
         email:sessionUser.email, 
         name:sessionUser.name, 
-        regDate: sessionUser.regDate
+        address: sessionUser.address
     })
-    const {userId, username, password, email, name} = modify
+    const {birth, username, password, email, name, address} = modify
     const handleChange = e => {
         const { value, name } = e.target
         setModify({
@@ -27,7 +27,7 @@ export default function UserModify() {
       'Authorization': 'JWT fefege..'
   }
     const UserModify = modifyRequest => 
-                axios.put(`${SERVER}/users`, JSON.stringify(modifyRequest),{headers})
+                axios.put(`${SERVER}/users/modify`, JSON.stringify(modifyRequest),{headers})
     
     const handleSubmit = e => {
         e.preventDefault()
@@ -52,12 +52,12 @@ export default function UserModify() {
         <ul>
             <li>
               <label>
-                    <span>회원번호 : {sessionUser.userId} </span>
+                    <span>회원번호 : {sessionUser.username} </span>
                 </label>
             </li>
             <li>
                 <label>
-                    <span>아이디 : {sessionUser.username} </span>
+                    <span>아이디 : {sessionUser.name} </span>
                 </label>
             </li>
             <li>

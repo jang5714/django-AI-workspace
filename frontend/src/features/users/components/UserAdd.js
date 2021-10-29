@@ -28,11 +28,11 @@ function Copyright(props) {
       </Typography>
     );
   }
-  const server = 'http://127.0.0.1:8000/api/'
+  const server = 'http://127.0.0.1:8000/api'
   const header = {'Content-Type':'application/json'} //Restfull 데이터에 대한 설정 값
   const theme = createTheme();
 
-export const userRegister = body => axios.post(`${server}users`,{header, body})
+export const userRegister = body => axios.post(`${server}/users/add`,{header,body})
 
 export default function UserAdd() {
     const history = useHistory()
@@ -44,13 +44,14 @@ export default function UserAdd() {
               email: '',
               password: '',
             })
-    const {username, password, name, email, birth, address} = `user`
+    const {username, password, name, email, birth, address} = user
+
     const handleSubmit = e => {
           e.preventDefault();
           alert(`가입 회원정보 : ${JSON.stringify(user)}`)// 스트링으로 변화게 하다 안하면 인간이 못알아 보게 된다.
           userRegister({user}) //DB 저장 
           .then(
-            res => {alert(`회원가입완료: ${res.data.result}`)},
+            res => {alert(`회원가입완료}`)},
             history.push('/users/login')
             )
           .catch(err => {alert(`회원가입 실패 : ${err}`)})
